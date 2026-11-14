@@ -37,3 +37,6 @@ Thumbs.db
 # IDE settings
 .vscode/
 .idea/
+
+# Local copies of production secrets (never commit)
+.secrets/

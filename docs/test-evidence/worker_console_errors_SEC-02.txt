@@ -1,0 +1,7 @@
+X [ERROR] Agent error: Error: AI selected an invalid tool
+X [ERROR] API error: AgentRunError: Agent execution failed
+    [cause]: Error: AI selected an invalid tool
+X [ERROR] Agent error: Error: AI selected an invalid tool
+X [ERROR] API error: AgentRunError: Agent execution failed
+    [cause]: Error: AI selected an invalid tool
+[wrangler:warn] The Workers runtime crashed unexpectedly and is being restarted (crash #1). Any additional runtime output above may indicate the cause.

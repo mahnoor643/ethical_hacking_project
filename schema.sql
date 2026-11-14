@@ -1,3 +1,12 @@
+-- Reference copy of the ORIGINAL schema (migration 0001).
+--
+-- The database is now managed with Wrangler migrations in ./migrations:
+--   0001_initial_schema.sql              - these three tables
+--   0002_security_alerts_and_rate_limits - alert category, indexes, rate_limits
+--
+-- Apply with:
+--   npx wrangler d1 migrations apply agent-activity-db --local
+--   npx wrangler d1 migrations apply agent-activity-db --remote
 
 -- Stores every AI Agent execution
 CREATE TABLE IF NOT EXISTS agent_runs (

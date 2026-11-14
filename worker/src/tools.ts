@@ -25,3 +25,13 @@ export function findHighestSale() {
     item.amount > highest.amount ? item : highest
   );
 }
+
+// The allow-list: the only functions the agent can ever call.
+export const TOOLS = {
+  calculateTotal,
+  findHighestSale
+} as const;
+
+export type ToolRegistry = {
+  [K in keyof typeof TOOLS]: () => unknown;
+};

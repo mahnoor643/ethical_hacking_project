@@ -1,0 +1,134 @@
+Agent Activity Logger — Production deployment test evidence
+Date: 14 November 2026
+Live URL: https://agent-activity-logger.mahnoort643.workers.dev
+Worker version ID: 0ac28477-0f9f-4aeb-a89c-db75db156903
+Plan: Cloudflare Workers Free (workers.dev subdomain, no custom domain)
+AI model: @cf/meta/llama-4-scout-17b-16e-instruct
+
+All outputs below were copied from the actual command output. The access
+code was read from a local gitignored file by the scripts and never printed.
+
+======================================================================
+1. Static checks
+======================================================================
+$ npm run typecheck          -> exit 0 (no errors)
+$ npm test                   -> tests 69, suites 12, pass 69, fail 0
+  (full output: unit_tests_2026-11-14_deployment.txt)
+$ npm --prefix frontend run build
+  dist/index.html                   1.09 kB
+  dist/assets/index-DGqnDBI7.css   15.15 kB
+  dist/assets/index-CYP_bQBs.js   253.66 kB
+  ✓ built
+$ grep bundle for localhost|127.0.0.1|wrangler dev|8787|ACCESS_CODE|SESSION_SECRET -> no matches
+$ npx wrangler deploy --dry-run
+  Bindings: env.DB (agent-activity-db) D1, env.AI AI, env.ASSETS Assets
+
+======================================================================
+2. Remote D1 before migration (read-only queries)
+======================================================================
+Tables: agent_runs, activity_logs, security_alerts (DDL identical to schema.sql)
+Row counts: runs 0, logs 0, alerts 0
+
+$ npx wrangler d1 migrations apply agent-activity-db --remote   (approved by the project owner)
+  0001_initial_schema.sql                  ✅  (CREATE TABLE IF NOT EXISTS — no change)
+  0002_security_alerts_and_rate_limits.sql ✅
+
+======================================================================
+3. Local end-to-end (wrangler dev, separate test DB .wrangler/test-state,
+   real Workers AI — 2 inference calls)
+======================================================================
+PASS  health endpoint + D1 connectivity
+PASS  React index served at /
+PASS  SPA fallback: deep link returns 200 (no 404 on refresh)
+PASS  CSP header on static app
+PASS  _headers file not served as content
+PASS  unauthenticated GET /api/runs -> 401
+PASS  unauthenticated GET /api/alerts -> 401
+PASS  unauthenticated GET /api/runs/00000000-0000-4000-8000-000000000000/logs -> 401
+PASS  unauthenticated POST /api/agent/run -> 401 (AI not invoked)
+PASS  wrong access code -> 401
+PASS  valid access code -> 200 + session cookie
+PASS  HttpOnly session cookie stored
+PASS  GET /api/agent/run -> 405
+PASS  unknown /api route -> JSON 404
+PASS  real AI: highest sale -> findHighestSale (Laptop 50000)
+PASS  real AI: total revenue -> calculateTotal (total 90000)
+PASS  unsupported task rejected (422), no tool, no alert
+PASS  instruction override rejected + alert raised
+PASS  activity log stored; tool_call closed as success (task_received:success,policy_check:success,decision:success,relevance_check:success,tool_call:success,tool_result:success,final_response:success)
+PASS  run history returns 4 runs
+PASS  security alert stored with run ID, severity, category (1 total)
+PASS  access code not present in any page, bundle or API response
+PASS  no secret names in responses
+PASS  rate limit enforced server-side (statuses: 422 429 429 429 429 429)
+PASS  after logout, protected API -> 401
+---- 25 passed, 0 failed
+
+======================================================================
+4. Live deployment end-to-end (same script, production URL, remote D1,
+   real Workers AI — 2 inference calls)
+======================================================================
+PASS  health endpoint + D1 connectivity
+PASS  React index served at /
+PASS  SPA fallback: deep link returns 200 (no 404 on refresh)
+PASS  CSP header on static app
+PASS  _headers file not served as content
+PASS  unauthenticated GET /api/runs -> 401
+PASS  unauthenticated GET /api/alerts -> 401
+PASS  unauthenticated GET /api/runs/00000000-0000-4000-8000-000000000000/logs -> 401
+PASS  unauthenticated POST /api/agent/run -> 401 (AI not invoked)
+PASS  wrong access code -> 401
+PASS  valid access code -> 200 + session cookie
+PASS  HttpOnly session cookie stored
+PASS  GET /api/agent/run -> 405
+PASS  unknown /api route -> JSON 404
+PASS  real AI: highest sale -> findHighestSale (Laptop 50000)
+PASS  real AI: total revenue -> calculateTotal (total 90000)
+PASS  unsupported task rejected (422), no tool, no alert
+PASS  instruction override rejected + alert raised
+PASS  activity log stored; tool_call closed as success (task_received:success,policy_check:success,decision:success,relevance_check:success,tool_call:success,tool_result:success,final_response:success)
+PASS  run history returns 4 runs
+PASS  security alert stored with run ID, severity, category (1 total)
+PASS  access code not present in any page, bundle or API response
+PASS  no secret names in responses
+PASS  rate limit enforced server-side (statuses: 422 422 422 429 429 429)
+PASS  after logout, protected API -> 401
+---- 25 passed, 0 failed
+
+Note on the rate-limit line: the limit is 5 runs per client per fixed
+60-second window. The 4 earlier runs straddled a window boundary
+(2 + 2), so 3 more were accepted before the 6th run in that window got 429.
+
+Response headers (live):
+  /            Content-Security-Policy, X-Frame-Options: DENY,
+               X-Content-Type-Options: nosniff, Strict-Transport-Security
+  /api/health  Cache-Control: no-store, X-Frame-Options: DENY
+
+Worker secrets (names/types only, `wrangler secret list`):
+  ACCESS_CODE     secret_text
+  SESSION_SECRET  secret_text
+
+Remote D1 after the live test (read-only query):
+  agent_runs:      completed 2, rejected 5
+  security_alerts: high / instruction_override_attempt / run 194c91b3 / 2026-11-14 07:09:07
+  activity_logs:   29 rows, 0 rows left with status 'running'
+
+======================================================================
+5. Live UI check (headless Chrome via DevTools protocol, real login form)
+======================================================================
+{
+  "loginShown": true,
+  "privateDataBeforeLogin": false,
+  "loggedIn": true,
+  "cookieVisibleToJs": false,
+  "hscroll_dashboard": false,
+  "hscroll_history": false,
+  "hscroll_alerts": false,
+  "hscroll_timeline": false,
+  "alertsRendered": 1,
+  "refreshKeepsPage": "Run History",
+  "unknownPathRendersApp": true,
+  "consoleErrors": []
+}
+Viewports: 390x844 (mobile, DPR 2) and 1366x900 (desktop).
+Screenshots: docs/screenshots/prod_*.png

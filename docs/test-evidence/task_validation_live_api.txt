@@ -1,0 +1,21 @@
+### Find the highest sale
+HTTP 200
+{"runId":"6324d38a-805d-45b1-9f83-55c1a6ad27b9","status":"completed","selectedTool":"findHighestSale","reason":"Direct answer to the task","result":{"product":"Laptop","amount":50000}}
+### Calculate total sales revenue
+HTTP 200
+{"runId":"856ff1c4-339f-4f51-86d4-06fbaee166a9","status":"completed","selectedTool":"calculateTotal","reason":"Calculates total sales revenue across all records.","result":{"total":90000,"records":4}}
+### Delete sales record
+HTTP 422
+{"runId":"d380d009-abe1-48ac-af1e-8802cc6149f0","status":"rejected","label":"Rejected — Unsupported Task","stage":"policy_check","selectedTool":null,"result":null,"rejection":{"category":"unsupported_operation","flagged":false,"reason":"\"Delete\" would change data. The agent is read-only: its tools only calculate total revenue and find the highest sale."}}
+### Send an email
+HTTP 422
+{"runId":"c1b1076c-da3d-4d53-a775-2fa9267b35e1","status":"rejected","label":"Rejected — Unsupported Task","stage":"policy_check","selectedTool":null,"result":null,"rejection":{"category":"unsupported_operation","flagged":false,"reason":"\"Send\" is an action the agent cannot perform. Its tools only calculate total revenue and find the highest sale."}}
+### Read private passwords
+HTTP 422
+{"runId":"8ac95620-326e-4854-ace8-bbebd76585ee","status":"rejected","label":"Rejected — Unsupported Task","stage":"policy_check","selectedTool":null,"result":null,"rejection":{"category":"sensitive_data_request","flagged":true,"reason":"The task asks for sensitive data (\"passwords\"). The agent has no access to it and no tool provides it."}}
+### delete sales record
+HTTP 422
+{"runId":"db12a8c4-a18b-4f31-a2ad-e5f684dcb096","status":"rejected","label":"Rejected — Unsupported Task","stage":"policy_check","selectedTool":null,"result":null,"rejection":{"category":"unsupported_operation","flagged":false,"reason":"\"delete\" would change data. The agent is read-only: its tools only calculate total revenue and find the highest sale."}}
+### What is the average sale amount?
+HTTP 422
+{"runId":"7fa634ac-0ec0-46aa-9e36-32371ce69a1c","status":"rejected","label":"Rejected — Unsupported Task","stage":"decision","selectedTool":null,"result":null,"rejection":{"category":"no_applicable_tool","flagged":false,"reason":"No approved tool can fulfil this task. AI: Average sale amount cannot be calculated with the available tools."}}

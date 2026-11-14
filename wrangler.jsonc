@@ -1,20 +1,38 @@
-
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "agent-activity-logger",
   "main": "worker/src/index.ts",
   "compatibility_date": "2025-09-01",
 
+  // Free workers.dev URL only. No custom domain / routes.
+  "workers_dev": true,
+  "preview_urls": false,
+
+  // React build (frontend/dist) served by Workers Static Assets.
+  // /api/* always runs the Worker; every other path is the SPA, and
+  // unknown paths fall back to index.html (no 404 on refresh).
+  "assets": {
+    "directory": "./frontend/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "agent-activity-db",
-      "database_id": "e5e2687f-df6f-4da2-994a-80f1fd24e797"
+      "database_id": "e5e2687f-df6f-4da2-994a-80f1fd24e797",
+      "migrations_dir": "migrations"
     }
   ],
 
   "ai": {
     "binding": "AI",
-     "remote": true
+    "remote": true
   }
+
+  // Secrets (set with `wrangler secret put` or `--secrets-file`, never committed):
+  //   ACCESS_CODE     - the access code users type on the login screen
+  //   SESSION_SECRET  - random key that signs session cookies
 }

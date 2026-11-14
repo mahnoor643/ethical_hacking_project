@@ -1,0 +1,44 @@
+
+[completed] Find the highest sale  (6324d38a, completed_at=2026-11-14 06:20:24)
+  task_received    success   Task received
+  policy_check     success   Policy check passed
+  decision         success   Selected findHighestSale
+  relevance_check  success   findHighestSale matches the task
+  tool_call        running   findHighestSale
+  tool_result      success   {"product":"Laptop","amount":50000}
+  final_response   success   {"product":"Laptop","amount":50000}
+
+[completed] Calculate total sales revenue  (856ff1c4, completed_at=2026-11-14 06:20:27)
+  task_received    success   Task received
+  policy_check     success   Policy check passed
+  decision         success   Selected calculateTotal
+  relevance_check  success   calculateTotal matches the task
+  tool_call        running   calculateTotal
+  tool_result      success   {"total":90000,"records":4}
+  final_response   success   {"total":90000,"records":4}
+
+[rejected] Delete sales record  (d380d009, completed_at=2026-11-14 06:20:27)
+  task_received    success   Task received
+  policy_check     rejected  Blocked: unsupported_operation
+  task_rejected    rejected  Rejected — Unsupported Task  | unsupported_operation: "Delete" would change data. The agent is read-only: its tools only calculate total revenue and find the highest sale. No tool was executed.
+
+[rejected] Send an email  (c1b1076c, completed_at=2026-11-14 06:20:27)
+  task_received    success   Task received
+  policy_check     rejected  Blocked: unsupported_operation
+  task_rejected    rejected  Rejected — Unsupported Task  | unsupported_operation: "Send" is an action the agent cannot perform. Its tools only calculate total revenue and find the highest sale. No tool was executed.
+
+[rejected] Read private passwords  (8ac95620, completed_at=2026-11-14 06:20:27)
+  task_received    success   Task received
+  policy_check     rejected  Blocked: sensitive_data_request
+  task_rejected    rejected  Rejected — Unsupported Task  | sensitive_data_request (flagged for review): The task asks for sensitive data ("passwords"). The agent has no access to it and no tool provides it. No tool was executed.
+
+[rejected] delete sales record  (db12a8c4, completed_at=2026-11-14 06:20:27)
+  task_received    success   Task received
+  policy_check     rejected  Blocked: unsupported_operation
+  task_rejected    rejected  Rejected — Unsupported Task  | unsupported_operation: "delete" would change data. The agent is read-only: its tools only calculate total revenue and find the highest sale. No tool was executed.
+
+[rejected] What is the average sale amount?  (7fa634ac, completed_at=2026-11-14 06:20:29)
+  task_received    success   Task received
+  policy_check     success   Policy check passed
+  decision         rejected  No applicable tool
+  task_rejected    rejected  Rejected — Unsupported Task  | no_applicable_tool: No approved tool can fulfil this task. AI: Average sale amount cannot be calculated with the available tools. No tool was executed.

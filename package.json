@@ -1,10 +1,19 @@
 {
   "name": "agent-activity-logger",
   "version": "1.0.0",
-  "description": "",
+  "description": "Agent Activity Logger - AI Security Monitoring Dashboard (Cloudflare Workers + Workers AI + D1)",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "wrangler dev --persist-to ./.wrangler/state",
+    "db:migrate:local": "wrangler d1 migrations apply agent-activity-db --local --persist-to ./.wrangler/state",
+    "db:migrate:remote": "wrangler d1 migrations apply agent-activity-db --remote",
+    "db:init:local": "npm run db:migrate:local",
+    "typecheck": "tsc -p .",
+    "test": "node --test --test-reporter=spec --disable-warning=ExperimentalWarning worker/test/agent.test.ts worker/test/security.test.ts",
+    "build:frontend": "npm --prefix frontend run build",
+    "check": "npm run typecheck && npm test && npm run build:frontend && wrangler deploy --dry-run",
+    "deploy": "npm run typecheck && npm test && npm run build:frontend && wrangler deploy"
   },
   "keywords": [],
   "author": "",

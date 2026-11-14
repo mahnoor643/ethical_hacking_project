@@ -1,0 +1,25 @@
+# UI connectivity test log (headless Chrome via puppeteer-core, 2026-11-14 UTC)
+## Hung-backend scenario (13_backend_disconnected.png)
+DISCONNECTED_SHOT Execution failed The backend did not respond within 45 seconds. Make sure "wrangler dev --port 8787" is running. No result is shown because the backend did not return a successful response. Retry
+file:///C:/Users/dell/AppData/Local/Temp/claude/f98dbd03c6b2ba5b/d8237527-7a78-44bc-a09c-10f241b65085/scratchpad/tools/node_modules/puppeteer-core/lib/esm/puppeteer/common/WaitTask.js:45
+            this.#timeoutError = new TimeoutError(`Waiting failed: ${options.timeout}ms exceeded`);
+                                 ^
+
+TimeoutError: Waiting failed: 180000ms exceeded
+    at new WaitTask (file:///C:/Users/dell/AppData/Local/Temp/claude/f98dbd03c6b2ba5b/d8237527-7a78-44bc-a09c-10f241b65085/scratchpad/tools/node_modules/puppeteer-core/lib/esm/puppeteer/common/WaitTask.js:45:34)
+    at IsolatedWorld.waitForFunction (file:///C:/Users/dell/AppData/Local/Temp/claude/f98dbd03c6b2ba5b/d8237527-7a78-44bc-a09c-10f241b65085/scratchpad/tools/node_modules/puppeteer-core/lib/esm/puppeteer/api/Realm.js:22:26)
+    at CdpFrame.waitForFunction (file:///C:/Users/dell/AppData/Local/Temp/claude/f98dbd03c6b2ba5b/d8237527-7a78-44bc-a09c-10f241b65085/scratchpad/tools/node_modules/puppeteer-core/lib/esm/puppeteer/api/Frame.js:568:43)
+    at CdpFrame.<anonymous> (file:///C:/Users/dell/AppData/Local/Temp/claude/f98dbd03c6b2ba5b/d8237527-7a78-44bc-a09c-10f241b65085/scratchpad/tools/node_modules/puppeteer-core/lib/esm/puppeteer/util/decorators.js:101:27)
+    at CdpPage.waitForFunction (file:///C:/Users/dell/AppData/Local/Temp/claude/f98dbd03c6b2ba5b/d8237527-7a78-44bc-a09c-10f241b65085/scratchpad/tools/node_modules/puppeteer-core/lib/esm/puppeteer/api/Page.js:1430:37)
+    at file:///C:/Users/dell/AppData/Local/Temp/claude/f98dbd03c6b2ba5b/d8237527-7a78-44bc-a09c-10f241b65085/scratchpad/tools/disc.mjs:12:9
+
+Node.js v22.19.0
+
+## Fresh page after clean restart (14_backend_reconnected_run_ok.png)
+RECONNECT_RUN Execution result completed ... Selected tool findHighestSale ...
+
+## Same-page disconnect/reconnect (13b, 13c)
+2026-11-14T04:11:35.437Z STATE1 API Connected
+2026-11-14T04:11:49.716Z STATE2 API Disconnected detected after 14 s
+2026-11-14T04:12:10.380Z STATE3 API Connected recovered 20 s after disconnect detected
+Worker restarted at 04:11:59 UTC

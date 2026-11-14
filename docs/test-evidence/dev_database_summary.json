@@ -1,0 +1,269 @@
+{
+  "source": "Local development D1 database (.wrangler/state), read from a copy; generated 2026-11-14",
+  "counts": {
+    "agent_runs": 46,
+    "activity_logs": 209,
+    "security_alerts": 0
+  },
+  "runs_by_status": {
+    "completed": 39,
+    "failed": 7
+  },
+  "events_by_type_status": [
+    [
+      "ai_retry",
+      "retrying",
+      1
+    ],
+    [
+      "decision",
+      "success",
+      39
+    ],
+    [
+      "error",
+      "failed",
+      7
+    ],
+    [
+      "final_response",
+      "success",
+      39
+    ],
+    [
+      "task_received",
+      "success",
+      45
+    ],
+    [
+      "tool_call",
+      "running",
+      39
+    ],
+    [
+      "tool_result",
+      "success",
+      39
+    ]
+  ],
+  "task_vs_selected_tool": [
+    [
+      "Calculate total sales revenue",
+      "Selected calculateTotal",
+      15
+    ],
+    [
+      "Find the highest sale",
+      "Selected findHighestSale",
+      22
+    ],
+    [
+      "What is our overall revenue across all sales?",
+      "Selected calculateTotal",
+      1
+    ],
+    [
+      "Which product had the biggest sale?",
+      "Selected findHighestSale",
+      1
+    ]
+  ],
+  "failed_runs": [
+    {
+      "run_id": "ea51679d-2a39-4547-b095-148b3c0ccb2b",
+      "started_at": "2026-11-13 20:36:52",
+      "completed_at": "2026-11-13 20:36:53",
+      "events": [
+        [
+          "error",
+          "Agent execution failed",
+          "AI decision or tool execution failed",
+          "failed",
+          "2026-11-13 20:36:53"
+        ]
+      ]
+    },
+    {
+      "run_id": "3ee83c20-b357-4f11-b120-e2084e38f37b",
+      "started_at": "2026-11-13 20:51:07",
+      "completed_at": "2026-11-13 20:51:07",
+      "events": [
+        [
+          "task_received",
+          "Task received",
+          "Find the highest sale",
+          "success",
+          "2026-11-13 20:51:07"
+        ],
+        [
+          "error",
+          "Agent execution failed",
+          "AI decision failed",
+          "failed",
+          "2026-11-13 20:51:07"
+        ]
+      ]
+    },
+    {
+      "run_id": "1531443a-0249-452f-8138-7f6b20dc5f4d",
+      "started_at": "2026-11-13 20:51:07",
+      "completed_at": "2026-11-13 20:51:07",
+      "events": [
+        [
+          "task_received",
+          "Task received",
+          "Calculate total sales revenue",
+          "success",
+          "2026-11-13 20:51:07"
+        ],
+        [
+          "error",
+          "Agent execution failed",
+          "AI decision failed",
+          "failed",
+          "2026-11-13 20:51:07"
+        ]
+      ]
+    },
+    {
+      "run_id": "30d56d5c-8736-4f5a-a596-8f7766d59c40",
+      "started_at": "2026-11-13 20:53:21",
+      "completed_at": "2026-11-13 20:55:21",
+      "events": [
+        [
+          "task_received",
+          "Task received",
+          "Calculate total sales revenue",
+          "success",
+          "2026-11-13 20:53:21"
+        ],
+        [
+          "error",
+          "Agent execution failed",
+          "AI decision failed",
+          "failed",
+          "2026-11-13 20:55:21"
+        ]
+      ]
+    },
+    {
+      "run_id": "39370d23-df3c-473e-8010-45e75f5fac74",
+      "started_at": "2026-11-13 20:56:00",
+      "completed_at": "2026-11-13 20:56:30",
+      "events": [
+        [
+          "task_received",
+          "Task received",
+          "Find the highest sale",
+          "success",
+          "2026-11-13 20:56:00"
+        ],
+        [
+          "error",
+          "Agent execution failed",
+          "AI decision failed",
+          "failed",
+          "2026-11-13 20:56:30"
+        ]
+      ]
+    },
+    {
+      "run_id": "d23bd72c-49f0-4cd9-a9f4-e377e7a768e4",
+      "started_at": "2026-11-13 20:57:23",
+      "completed_at": "2026-11-13 20:57:53",
+      "events": [
+        [
+          "task_received",
+          "Task received",
+          "Find the highest sale",
+          "success",
+          "2026-11-13 20:57:23"
+        ],
+        [
+          "error",
+          "Agent execution failed",
+          "AI decision failed",
+          "failed",
+          "2026-11-13 20:57:53"
+        ]
+      ]
+    },
+    {
+      "run_id": "4275c2b7-6360-4934-bc29-3b86a7997db8",
+      "started_at": "2026-11-13 20:57:55",
+      "completed_at": "2026-11-13 20:58:25",
+      "events": [
+        [
+          "task_received",
+          "Task received",
+          "Find the highest sale",
+          "success",
+          "2026-11-13 20:57:55"
+        ],
+        [
+          "error",
+          "Agent execution failed",
+          "AI decision failed",
+          "failed",
+          "2026-11-13 20:58:25"
+        ]
+      ]
+    }
+  ],
+  "retry_runs": [
+    {
+      "run_id": "70071520-ae75-45d2-b7a1-414143cd149c",
+      "events": [
+        [
+          "task_received",
+          "Task received",
+          "Find the highest sale",
+          "success",
+          "2026-11-13 20:59:36"
+        ],
+        [
+          "ai_retry",
+          "AI request timed out",
+          "Retrying AI decision (attempt 2 of 2)",
+          "retrying",
+          "2026-11-13 20:59:51"
+        ],
+        [
+          "decision",
+          "Selected findHighestSale",
+          "Identify the highest sale amount in the data.",
+          "success",
+          "2026-11-13 20:59:52"
+        ],
+        [
+          "tool_call",
+          "findHighestSale",
+          "Calling an approved tool",
+          "running",
+          "2026-11-13 20:59:52"
+        ],
+        [
+          "tool_result",
+          "{\"product\":\"Laptop\",\"amount\":50000}",
+          "Approved tool executed successfully",
+          "success",
+          "2026-11-13 20:59:52"
+        ],
+        [
+          "final_response",
+          "{\"product\":\"Laptop\",\"amount\":50000}",
+          "Agent task completed",
+          "success",
+          "2026-11-13 20:59:52"
+        ]
+      ]
+    }
+  ],
+  "completed_run_duration_seconds": {
+    "n": 39,
+    "min": 1.0,
+    "median": 2.0,
+    "max": 16.0,
+    "note": "Second-resolution D1 timestamps; indicative only."
+  }
+}
